@@ -1,0 +1,55 @@
+{
+  "name": "react-length-picker",
+  "version": "1.0.0",
+  "description": "A simple length picker that works with metric and imperial units",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "keywords": [
+    "react",
+    "length",
+    "cm",
+    "inches",
+    "feet",
+    "measurements",
+    "centimeters",
+    "meters",
+    "height"
+  ],
+  "scripts": {
+    "clear-build-folder": "rm -rf ./build",
+    "transpile": "tsc",
+    "fix-paths": "tsc-alias",
+    "build": "yarn clear-build-folder && yarn transpile && yarn fix-paths",
+    "dev": "yarn nodemon"
+  },
+  "files": [
+    "build"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maks-io/react-length-picker.git"
+  },
+  "author": "Markus Kurzmann <markus@kurzmann.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maks-io/react-length-picker/issues"
+  },
+  "homepage": "https://github.com/maks-io/react-length-picker#readme",
+  "dependencies": {
+    "@react-spring/web": "^9.7.3",
+    "lodash.range": "^3.2.0",
+    "react-intersection-observer": "^9.6.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.9",
+    "@types/lodash.range": "^3.2.9",
+    "@types/react": "~18.2.52",
+    "nodemon": "^3.0.3",
+    "prettier": "^3.2.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tsc": "^2.0.4",
+    "tsc-alias": "^1.8.8",
+    "typescript": "^5.3.3"
+  }
+}
