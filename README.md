@@ -10,7 +10,7 @@ A simple length picker that works with metric and imperial units
 
 ## Live Demo
 
-Coming soon
+https://stackblitz.com/edit/react-length-picker-demo
 
 ## Install
 
