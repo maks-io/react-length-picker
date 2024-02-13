@@ -6,7 +6,7 @@ import { FeetAndInches } from "$/types/FeetAndInches";
 const fontSizePrimary = 18;
 const fontSizeSecondary = 9;
 
-export const ReactLengthPicker = ({
+export const LengthPicker = ({
   containerWidth = 160,
   containerHeight = 80,
   entryHeight = 40,

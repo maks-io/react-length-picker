@@ -27,13 +27,13 @@ yarn add react-length-picker
 ## Usage
 
 ```tsx
-import { ReactLengthPicker } from "react-length-picker";
+import { LengthPicker } from "react-length-picker";
 
 // ...
 
 return (
   <SomeReactComponent>
-    <ReactLengthPicker
+    <LengthPicker
       unit={"metric"} // set current unit (metric vs. imperial)
       defaultLength={350} // set default length
       metricMin={300} // set minimum value for metric scale (in cm)
