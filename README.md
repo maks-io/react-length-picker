@@ -8,6 +8,8 @@ A simple length picker that works with metric and imperial units
 
 <img src="./documentation/reactLengthPickerGif01.gif" height="200px" alt="react-length-picker-gif" />
 
+[(YouTube Teaser here)](https://youtube.com/shorts/hfGCPGMwaUc?feature=share)
+
 ## Live Demo
 
 https://stackblitz.com/edit/react-length-picker-demo
