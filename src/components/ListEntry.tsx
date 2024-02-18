@@ -67,6 +67,7 @@ export const ListEntry = ({
 
   return (
     <div
+      className={"noselect"}
       ref={ref}
       style={{
         position: "relative",
