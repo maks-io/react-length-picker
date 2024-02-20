@@ -25,6 +25,7 @@ export const ListEntry = ({
 }: ListEntryProps) => {
   const [ref, inView] = useInView({
     rootMargin,
+    threshold: 1,
     root: parentRef.current,
   });
 

@@ -90,8 +90,16 @@ export const LengthPicker = ({
   entryContentStyle,
   ascending = true,
 }: ReactLengthPickerProps) => {
-  const margin = (containerHeight - entryHeight) / 1.5;
-  const rootMargin = `-${margin}px 0%`;
+  const discoverArea = entryHeight * 2 - 1;
+
+  let rootMargin: string;
+
+  if (discoverArea < containerHeight) {
+    const value = (containerHeight - discoverArea) / 2;
+    rootMargin = `-${value}px 0%`;
+  } else {
+    rootMargin = "0px";
+  }
 
   return (
     <div
