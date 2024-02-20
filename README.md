@@ -74,9 +74,10 @@ return (
 | onUnitChange        | no       | `() => {}`                                              | `(unit: Unit) => void`                                                                                                                         | Defines the callback function when the unit is changed via the length picker. The `Unit` type can be either `"metric"` or `"imperial"`.                                                                                                                                                                                                                |
 | unit                | no       | `"metric"`                                              | `Unit`                                                                                                                                         | Defines the current unit of the length picker. The `Unit` type can be either `"metric"` or `"imperial"`.                                                                                                                                                                                                                                               |
 
-## Ideas
+## Ideas / Open Tasks
 
 - Add possibility to also override css styling for `SecondaryListEntry`
+- Improve TypeScript (some redundancy in various interfaces, use inheritance etc.)
 
 ## If you enjoy using this...
 
