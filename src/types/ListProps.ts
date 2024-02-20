@@ -4,27 +4,37 @@ import { MetricFormatter } from "$/types/MetricFormatter";
 import { ImperialFormatter } from "$/types/ImperialFormatter";
 
 export interface ListProps {
-  entryHeight: number;
-  rootMargin: string;
-  metricStep: number;
-  metricMin: number;
-  metricMax: number;
-  metricFormatter: MetricFormatter;
-  imperialStep: number;
-  imperialMin: number;
-  imperialMax: number;
-  imperialFormatter: ImperialFormatter;
-  onLengthChange: (length: number) => void;
-  defaultLength: number;
+  ascending: boolean;
   containerHeight: number;
-  unit: "metric" | "imperial";
+  containerStyle?: CSSProperties;
+  defaultLength: number;
   entryContainerStyle?:
     | CSSProperties
-    | ((index: number, isActive: boolean) => CSSProperties);
+    | ((
+        index: number,
+        currentMetricValue: number,
+        currentImperialValue: number,
+        isActive: boolean,
+      ) => CSSProperties);
   entryContentStyle?:
     | CSSProperties
-    | ((index: number, isActive: boolean) => CSSProperties);
-  containerStyle?: CSSProperties;
-  ascending: boolean;
+    | ((
+        index: number,
+        currentMetricValue: number,
+        currentImperialValue: number,
+        isActive: boolean,
+      ) => CSSProperties);
+  entryHeight: number;
+  imperialFormatter: ImperialFormatter;
+  imperialMax: number;
+  imperialMin: number;
+  imperialStep: number;
+  metricFormatter: MetricFormatter;
+  metricMax: number;
+  metricMin: number;
+  metricStep: number;
+  onLengthChange: (length: number) => void;
   onUnitChange: (unit: Unit) => void;
+  rootMargin: string;
+  unit: "metric" | "imperial";
 }

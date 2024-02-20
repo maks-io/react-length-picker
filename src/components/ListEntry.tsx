@@ -41,14 +41,21 @@ export const ListEntry = memo(
       };
     }, [inView]);
 
+    const metricValue = useMemo(
+      () => (unit === "metric" ? value : imperialToMetric(value)),
+      [unit, value],
+    );
+
     const metricValueFormatted = useMemo(() => {
-      const metricValue = unit === "metric" ? value : imperialToMetric(value);
       return metricFormatter(unit === "metric", metricValue, index);
-    }, [unit, value, metricFormatter, index]);
+    }, [unit, metricFormatter, index, metricValue]);
+
+    const imperialValue = useMemo(
+      () => (unit === "imperial" ? value : metricToImperial(value)),
+      [unit, value],
+    );
 
     const imperialValueFormatted = useMemo(() => {
-      const imperialValue =
-        unit === "imperial" ? value : metricToImperial(value);
       const feetAndInches = inchesToFeetAndInches(imperialValue, true);
       return imperialFormatter(
         unit === "imperial",
@@ -56,16 +63,16 @@ export const ListEntry = memo(
         feetAndInches,
         index,
       );
-    }, [unit, value, imperialFormatter, index]);
+    }, [unit, imperialFormatter, index, imperialValue]);
 
     const entryContainerStyleEffective =
       typeof entryContainerStyle === "function"
-        ? entryContainerStyle(index, inView)
+        ? entryContainerStyle(index, metricValue, imperialValue, inView)
         : entryContainerStyle;
 
     const entryContentStyleEffective =
       typeof entryContentStyle === "function"
-        ? entryContentStyle(index, inView)
+        ? entryContentStyle(index, metricValue, imperialValue, inView)
         : entryContentStyle;
 
     return (

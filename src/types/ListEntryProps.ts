@@ -19,8 +19,18 @@ export interface ListEntryProps {
   unit: "metric" | "imperial";
   entryContainerStyle?:
     | CSSProperties
-    | ((index: number, isActive: boolean) => CSSProperties);
+    | ((
+        index: number,
+        currentMetricValue: number,
+        currentImperialValue: number,
+        isActive: boolean,
+      ) => CSSProperties);
   entryContentStyle?:
     | CSSProperties
-    | ((index: number, isActive: boolean) => CSSProperties);
+    | ((
+        index: number,
+        currentMetricValue: number,
+        currentImperialValue: number,
+        isActive: boolean,
+      ) => CSSProperties);
 }

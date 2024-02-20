@@ -10,10 +10,20 @@ export interface ReactLengthPickerProps {
   defaultLength?: number;
   entryContainerStyle?:
     | CSSProperties
-    | ((index: number, isActive: boolean) => CSSProperties);
+    | ((
+        index: number,
+        currentMetricValue: number,
+        currentImperialValue: number,
+        isActive: boolean,
+      ) => CSSProperties);
   entryContentStyle?:
     | CSSProperties
-    | ((index: number, isActive: boolean) => CSSProperties);
+    | ((
+        index: number,
+        currentMetricValue: number,
+        currentImperialValue: number,
+        isActive: boolean,
+      ) => CSSProperties);
   entryHeight?: number;
   imperialFormatter?: (
     isPrimary: boolean,
