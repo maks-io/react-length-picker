@@ -5,6 +5,7 @@ import { inchesToFeetAndInches } from "$/convert/inchesToFeetAndInches";
 import { SecondaryListEntry } from "$/components/SecondaryListEntry";
 import { imperialToMetric } from "$/convert/imperialToMetric";
 import { ListEntryProps } from "$/types/ListEntryProps";
+import { ListEntryCore } from "$/components/ListEntryCore";
 
 export const ListEntry = ({
   value,
@@ -77,42 +78,22 @@ export const ListEntry = ({
       : entryContentStyle;
 
   return (
-    <div
-      className={"noselect"}
-      ref={ref}
-      style={{
-        position: "relative",
-        minHeight: entryHeight,
-        fontSize: 24,
-        fontWeight: "bold",
-        boxSizing: "border-box",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        scrollSnapAlign: "center",
-        ...entryContainerStyleEffective,
-        marginTop: isFirst ? containerHeight / 2 - entryHeight / 2 : undefined,
-        marginBottom: isLast
-          ? containerHeight / 2 - entryHeight / 2
-          : undefined,
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          opacity: inView ? 1 : 0.35,
-          transition: "opacity 0.5s",
-          zIndex: 2,
-          ...entryContentStyleEffective,
-        }}
-      >
-        {unit === "metric" ? metricValueFormatted : imperialValueFormatted}
-        <SecondaryListEntry>
-          {unit === "metric" ? imperialValueFormatted : metricValueFormatted}
-        </SecondaryListEntry>
-      </div>
-    </div>
+    <ListEntryCore
+      refFromParent={ref}
+      index={index}
+      disabled={disabled}
+      metricValue={metricValue}
+      imperialValue={imperialValue}
+      inView={inView}
+      metricValueFormatted={metricValueFormatted}
+      imperialValueFormatted={imperialValueFormatted}
+      unit={unit}
+      isFirst={isFirst}
+      isLast={isLast}
+      containerHeight={containerHeight}
+      entryHeight={entryHeight}
+      entryContainerStyleEffective={entryContainerStyleEffective}
+      entryContentStyleEffective={entryContentStyleEffective}
+    />
   );
 };
