@@ -155,6 +155,7 @@ export const List = ({
         overflowY: "scroll",
         scrollSnapType: "y mandatory",
         border: "black 3px solid",
+        filter: disabled ? "grayscale(1)" : "grayscale(0)",
         ...containerStyle,
       }}
     >
