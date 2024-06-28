@@ -1,7 +1,7 @@
-import React, { CSSProperties, ReactNode } from "react";
-import { FeetAndInches } from "$/types/FeetAndInches";
+import React from "react";
 import { ImperialFormatter } from "$/types/ImperialFormatter";
 import { MetricFormatter } from "$/types/MetricFormatter";
+import { ContainerStyle } from "$/types/ContainerStyle";
 
 export interface ListEntryProps {
   index: number;
@@ -17,20 +17,7 @@ export interface ListEntryProps {
   containerHeight: number;
   imperialFormatter: ImperialFormatter;
   unit: "metric" | "imperial";
-  entryContainerStyle?:
-    | CSSProperties
-    | ((
-        index: number,
-        currentMetricValue: number,
-        currentImperialValue: number,
-        isActive: boolean,
-      ) => CSSProperties);
-  entryContentStyle?:
-    | CSSProperties
-    | ((
-        index: number,
-        currentMetricValue: number,
-        currentImperialValue: number,
-        isActive: boolean,
-      ) => CSSProperties);
+  entryContainerStyle?: ContainerStyle;
+  entryContentStyle?: ContainerStyle;
+  disabled: boolean;
 }

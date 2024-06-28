@@ -34,6 +34,7 @@ export const List = ({
   entryContentStyle,
   containerStyle,
   onUnitChange,
+  disabled,
 }: ListProps) => {
   const [usedUnit, setUsedUnit] = useState(unit);
   const ref = useRef<HTMLDivElement>();
@@ -175,6 +176,7 @@ export const List = ({
           containerHeight={containerHeight}
           entryContainerStyle={entryContainerStyle}
           entryContentStyle={entryContentStyle}
+          disabled={disabled}
         />
       ))}
       <style>{`

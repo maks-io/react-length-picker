@@ -2,28 +2,16 @@ import { CSSProperties } from "react";
 import { Unit } from "$/types/Unit";
 import { MetricFormatter } from "$/types/MetricFormatter";
 import { ImperialFormatter } from "$/types/ImperialFormatter";
+import { ContainerStyle } from "$/types/ContainerStyle";
 
 export interface ListProps {
   ascending: boolean;
   containerHeight: number;
   containerStyle?: CSSProperties;
   defaultLength: number;
-  entryContainerStyle?:
-    | CSSProperties
-    | ((
-        index: number,
-        currentMetricValue: number,
-        currentImperialValue: number,
-        isActive: boolean,
-      ) => CSSProperties);
-  entryContentStyle?:
-    | CSSProperties
-    | ((
-        index: number,
-        currentMetricValue: number,
-        currentImperialValue: number,
-        isActive: boolean,
-      ) => CSSProperties);
+  disabled: boolean;
+  entryContainerStyle?: ContainerStyle;
+  entryContentStyle?: ContainerStyle;
   entryHeight: number;
   imperialFormatter: ImperialFormatter;
   imperialMax: number;

@@ -6,4 +6,5 @@ export type ImperialFormatter = (
   inches: number,
   feetAndInches: FeetAndInches,
   index: number,
+  disabled: boolean,
 ) => string | number | React.ReactNode;

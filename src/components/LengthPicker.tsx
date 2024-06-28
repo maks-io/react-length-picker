@@ -1,5 +1,5 @@
 import { ReactLengthPickerProps } from "$/types/ReactLengthPickerProps";
-import React, { memo } from "react";
+import React from "react";
 import { List } from "$/components/List";
 import { FeetAndInches } from "$/types/FeetAndInches";
 
@@ -7,6 +7,7 @@ const fontSizePrimary = 18;
 const fontSizeSecondary = 9;
 
 export const LengthPicker = ({
+  disabled = false,
   containerWidth = 160,
   containerHeight = 80,
   entryHeight = 40,
@@ -21,6 +22,7 @@ export const LengthPicker = ({
     isPrimary: boolean,
     centimeters: number,
     index: number,
+    disabled: boolean,
   ) => (
     <>
       <span
@@ -49,6 +51,8 @@ export const LengthPicker = ({
     isPrimary: boolean,
     inchesOnly: number,
     feetAndInches: FeetAndInches,
+    index: number,
+    disabled: boolean,
   ) => (
     <>
       <span
@@ -106,6 +110,7 @@ export const LengthPicker = ({
       style={{
         height: containerHeight,
         width: containerWidth,
+        pointerEvents: disabled ? "none" : undefined,
       }}
     >
       <List
@@ -128,6 +133,7 @@ export const LengthPicker = ({
         entryContentStyle={entryContentStyle}
         ascending={ascending}
         onUnitChange={onUnitChange}
+        disabled={disabled}
       />
       <style>{`
             .noselect {

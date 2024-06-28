@@ -1,6 +1,8 @@
-import { CSSProperties, ReactNode } from "react";
+import { CSSProperties } from "react";
 import { Unit } from "$/types/Unit";
-import { FeetAndInches } from "$/types/FeetAndInches";
+import { ContainerStyle } from "$/types/ContainerStyle";
+import { MetricFormatter } from "$/types/MetricFormatter";
+import { ImperialFormatter } from "$/types/ImperialFormatter";
 
 export interface ReactLengthPickerProps {
   ascending?: boolean;
@@ -8,37 +10,15 @@ export interface ReactLengthPickerProps {
   containerStyle?: CSSProperties;
   containerWidth?: number;
   defaultLength?: number;
-  entryContainerStyle?:
-    | CSSProperties
-    | ((
-        index: number,
-        currentMetricValue: number,
-        currentImperialValue: number,
-        isActive: boolean,
-      ) => CSSProperties);
-  entryContentStyle?:
-    | CSSProperties
-    | ((
-        index: number,
-        currentMetricValue: number,
-        currentImperialValue: number,
-        isActive: boolean,
-      ) => CSSProperties);
+  disabled?: boolean;
+  entryContainerStyle?: ContainerStyle;
+  entryContentStyle?: ContainerStyle;
   entryHeight?: number;
-  imperialFormatter?: (
-    isPrimary: boolean,
-    inches: number,
-    feetAndInches: FeetAndInches,
-    index: number,
-  ) => string | number | ReactNode;
+  imperialFormatter?: ImperialFormatter;
   imperialMax?: number;
   imperialMin?: number;
   imperialStep?: number;
-  metricFormatter?: (
-    isPrimary: boolean,
-    centimeters: number,
-    index: number,
-  ) => string | number | ReactNode;
+  metricFormatter?: MetricFormatter;
   metricMax?: number;
   metricMin?: number;
   metricStep?: number;

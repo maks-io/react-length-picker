@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 import { metricToImperial } from "$/convert/metricToImperial";
 import { inchesToFeetAndInches } from "$/convert/inchesToFeetAndInches";
@@ -22,6 +22,7 @@ export const ListEntry = ({
   index,
   entryContainerStyle = {},
   entryContentStyle = {},
+  disabled,
 }: ListEntryProps) => {
   const [ref, inView] = useInView({
     rootMargin,
@@ -46,8 +47,8 @@ export const ListEntry = ({
   );
 
   const metricValueFormatted = useMemo(() => {
-    return metricFormatter(unit === "metric", metricValue, index);
-  }, [unit, metricFormatter, index, metricValue]);
+    return metricFormatter(unit === "metric", metricValue, index, disabled);
+  }, [unit, metricFormatter, index, metricValue, disabled]);
 
   const imperialValue = useMemo(
     () => (unit === "imperial" ? value : metricToImperial(value)),
@@ -61,17 +62,18 @@ export const ListEntry = ({
       imperialValue,
       feetAndInches,
       index,
+      disabled,
     );
-  }, [unit, imperialFormatter, index, imperialValue]);
+  }, [unit, imperialFormatter, index, imperialValue, disabled]);
 
   const entryContainerStyleEffective =
     typeof entryContainerStyle === "function"
-      ? entryContainerStyle(index, metricValue, imperialValue, inView)
+      ? entryContainerStyle(index, metricValue, imperialValue, inView, disabled)
       : entryContainerStyle;
 
   const entryContentStyleEffective =
     typeof entryContentStyle === "function"
-      ? entryContentStyle(index, metricValue, imperialValue, inView)
+      ? entryContentStyle(index, metricValue, imperialValue, inView, disabled)
       : entryContentStyle;
 
   return (
