@@ -1,6 +1,6 @@
 {
   "name": "react-length-picker",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A simple length picker that works with metric and imperial units",
   "main": "build/index.js",
   "types": "build/index.d.ts",

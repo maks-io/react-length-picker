@@ -110,30 +110,30 @@ export const List = ({
     if (!currentLengths || currentLengths.length !== 1) {
       return;
     }
-    if (usedUnit === unit) {
+    const newUnit = unit; // renaming for sake of sanity
+    if (usedUnit === newUnit) {
       return;
     }
     const valueFromPrevRange = currentLengths[0];
-    const valueFromOtherRangeInCurrentUnit =
-      unit === "metric"
+    const valueFromOtherRangeInNewUnit =
+      newUnit === "metric"
         ? imperialToMetric(valueFromPrevRange)
         : metricToImperial(valueFromPrevRange);
-    let currentRange =
-      unit === "metric"
+    let newRange =
+      newUnit === "metric"
         ? lodashRange(metricMin, metricMax + metricStep, metricStep)
         : lodashRange(imperialMin, imperialMax + imperialStep, imperialStep);
     if (!ascending) {
-      currentRange = currentRange.reverse();
+      newRange = newRange.reverse();
     }
     const closestInRange = getClosestInRange(
-      currentRange,
-      valueFromOtherRangeInCurrentUnit,
+      newRange,
+      valueFromOtherRangeInNewUnit,
     );
-
-    scrollContainer(currentRange, closestInRange, false);
+    scrollContainer(newRange, closestInRange, false);
     setCurrentLengths([closestInRange]);
-    onUnitChange(unit);
-    setUsedUnit(unit);
+    onUnitChange(newUnit);
+    setUsedUnit(newUnit);
   }, [unit, usedUnit, currentLengths]);
 
   useEffect(() => {
@@ -145,6 +145,9 @@ export const List = ({
       return;
     }
     if (currentLengths[0] === defaultLengthSanitized) {
+      return;
+    }
+    if (unit !== usedUnit) {
       return;
     }
     scrollContainer(numberRange, defaultLengthSanitized);
