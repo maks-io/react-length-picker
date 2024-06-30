@@ -36,10 +36,6 @@ export const List = ({
   onUnitChange,
   disabled,
 }: ListProps) => {
-  const [usedUnit, setUsedUnit] = useState(unit);
-  const ref = useRef<HTMLDivElement>();
-  const [currentLengths, setCurrentLengths] = useState([defaultLength]);
-
   const numberRange = useMemo(() => {
     if (unit === "imperial") {
       if (ascending) {
@@ -75,6 +71,17 @@ export const List = ({
     imperialMin,
     imperialMax,
     imperialStep,
+  ]);
+
+  const defaultLengthSanitized = useMemo(
+    () => getClosestInRange(numberRange, defaultLength),
+    [numberRange, defaultLength],
+  );
+
+  const [usedUnit, setUsedUnit] = useState(unit);
+  const ref = useRef<HTMLDivElement>();
+  const [currentLengths, setCurrentLengths] = useState([
+    defaultLengthSanitized,
   ]);
 
   const scrollContainer = useCallback(
@@ -130,18 +137,18 @@ export const List = ({
   }, [unit, usedUnit, currentLengths]);
 
   useEffect(() => {
-    scrollContainer(numberRange, defaultLength);
+    scrollContainer(numberRange, defaultLengthSanitized);
   }, []);
 
   useEffect(() => {
     if (!currentLengths || currentLengths.length !== 1) {
       return;
     }
-    if (currentLengths[0] === defaultLength) {
+    if (currentLengths[0] === defaultLengthSanitized) {
       return;
     }
-    scrollContainer(numberRange, defaultLength);
-  }, [defaultLength]);
+    scrollContainer(numberRange, defaultLengthSanitized);
+  }, [defaultLengthSanitized]);
 
   return (
     <div

@@ -2,7 +2,6 @@ import React, { useEffect, useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 import { metricToImperial } from "$/convert/metricToImperial";
 import { inchesToFeetAndInches } from "$/convert/inchesToFeetAndInches";
-import { SecondaryListEntry } from "$/components/SecondaryListEntry";
 import { imperialToMetric } from "$/convert/imperialToMetric";
 import { ListEntryProps } from "$/types/ListEntryProps";
 import { ListEntryCore } from "$/components/ListEntryCore";
