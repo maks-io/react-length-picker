@@ -1,5 +1,5 @@
 import { ReactLengthPickerProps } from "$/types/ReactLengthPickerProps";
-import React from "react";
+import React, { useEffect } from "react";
 import { List } from "$/components/List";
 import { FeetAndInches } from "$/types/FeetAndInches";
 
@@ -7,14 +7,15 @@ const fontSizePrimary = 18;
 const fontSizeSecondary = 9;
 
 export const LengthPicker = ({
+  keyName: keyNameSuffix,
   disabled = false,
   containerWidth = 160,
   containerHeight = 80,
   entryHeight = 40,
-  defaultLength = 350,
   unit = "metric",
   onLengthChange = () => {},
   onUnitChange = () => {},
+  length,
   metricStep = 1,
   metricMin = 300,
   metricMax = 400,
@@ -69,7 +70,7 @@ export const LengthPicker = ({
           fontWeight: "normal",
         }}
       >
-        ′
+        &Prime;
       </span>
       <span
         style={{
@@ -85,7 +86,7 @@ export const LengthPicker = ({
           fontWeight: "normal",
         }}
       >
-        ″
+        &prime;
       </span>
     </>
   ),
@@ -94,31 +95,30 @@ export const LengthPicker = ({
   entryContentStyle,
   ascending = true,
 }: ReactLengthPickerProps) => {
-  const discoverArea = entryHeight * 2 - 1;
+  const keyName = `react-length-picker-${keyNameSuffix}`;
 
-  let rootMargin: string;
-
-  if (discoverArea < containerHeight) {
-    const value = (containerHeight - discoverArea) / 2;
-    rootMargin = `-${value}px 0%`;
-  } else {
-    rootMargin = "0px";
-  }
+  useEffect(() => {
+    onUnitChange(unit);
+  }, [unit]);
 
   return (
     <div
+      id={keyName}
+      key={keyName}
       style={{
         height: containerHeight,
         width: containerWidth,
-        pointerEvents: disabled ? "none" : undefined,
+        pointerEvents: disabled ? "none" : "all",
+        touchAction: disabled ? "none" : "auto",
       }}
     >
       <List
+        keyName={keyName}
         containerStyle={containerStyle}
         unit={unit}
         containerHeight={containerHeight}
+        containerWidth={containerWidth}
         entryHeight={entryHeight}
-        rootMargin={rootMargin}
         metricStep={metricStep}
         metricMin={metricMin}
         metricMax={metricMax}
@@ -127,7 +127,7 @@ export const LengthPicker = ({
         imperialMax={imperialMax}
         metricFormatter={metricFormatter}
         imperialFormatter={imperialFormatter}
-        defaultLength={defaultLength}
+        length={length}
         onLengthChange={onLengthChange}
         entryContainerStyle={entryContainerStyle}
         entryContentStyle={entryContentStyle}

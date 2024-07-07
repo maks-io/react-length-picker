@@ -1,4 +1,5 @@
 import { CSSProperties } from "react";
+import { IVisibilityStatus } from "virtuosa/build/types/IVisibilityStatus";
 
 export type ContainerStyle =
   | CSSProperties
@@ -6,6 +7,6 @@ export type ContainerStyle =
       index: number,
       currentMetricValue: number,
       currentImperialValue: number,
-      isActive: boolean,
+      visibilityStatus: IVisibilityStatus,
       disabled: boolean,
     ) => CSSProperties);

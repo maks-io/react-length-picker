@@ -1,22 +1,13 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { ListEntry } from "$/components/ListEntry";
-import lodashRange from "lodash.range";
-import { imperialToMetric } from "$/convert/imperialToMetric";
-import { metricToImperial } from "$/convert/metricToImperial";
-import { getClosestInRange } from "$/helpers/getClosestInRange";
+import React, { useMemo } from "react";
 import { ListProps } from "$/types/ListProps";
-
-const SCROLL_TO_OFFSET = 0;
+import { ListEntry } from "$/components/ListEntry";
+import { createRange } from "$/helpers/createRange";
+import { getIndexFromLength } from "$/helpers/getIndexFromLength";
+import { IVirtuosaElement, Virtuosa } from "virtuosa";
 
 export const List = ({
+  keyName: keyNamePrefix,
   entryHeight,
-  rootMargin,
   metricStep,
   metricMin,
   metricMax,
@@ -26,179 +17,87 @@ export const List = ({
   imperialMax,
   imperialFormatter,
   onLengthChange,
-  defaultLength,
+  length,
   containerHeight,
   unit,
   ascending,
   entryContainerStyle,
   entryContentStyle,
   containerStyle,
+  containerWidth,
   onUnitChange,
   disabled,
+  backgroundRenderNumber = 20,
+  throttleWait = 32,
+  onLengthChangeTrigger = "CENTERED",
 }: ListProps) => {
-  const numberRange = useMemo(() => {
-    if (unit === "imperial") {
-      if (ascending) {
-        return lodashRange(
-          imperialMin,
-          imperialMax + imperialStep,
-          imperialStep,
-        );
-      } else {
-        return lodashRange(
-          imperialMin,
-          imperialMax + imperialStep,
-          imperialStep,
-        ).reverse();
-      }
-    } else {
-      if (ascending) {
-        return lodashRange(metricMin, metricMax + metricStep, metricStep);
-      } else {
-        return lodashRange(
-          metricMin,
-          metricMax + metricStep,
-          metricStep,
-        ).reverse();
-      }
-    }
-  }, [
-    ascending,
-    unit,
-    metricMin,
-    metricMax,
-    metricStep,
-    imperialMin,
-    imperialMax,
-    imperialStep,
-  ]);
-
-  const defaultLengthSanitized = useMemo(
-    () => getClosestInRange(numberRange, defaultLength),
-    [numberRange, defaultLength],
+  const numberRangeImperial = useMemo(
+    () => createRange(imperialMin, imperialMax, imperialStep, ascending),
+    [ascending, imperialMin, imperialMax, imperialStep],
   );
 
-  const [usedUnit, setUsedUnit] = useState(unit);
-  const ref = useRef<HTMLDivElement>();
-  const [currentLengths, setCurrentLengths] = useState([
-    defaultLengthSanitized,
-  ]);
-
-  const scrollContainer = useCallback(
-    (numberRange: number[], value: number, smooth = false) => {
-      const top =
-        numberRange.indexOf(value) * entryHeight +
-        containerHeight / 2.5 -
-        entryHeight / 2 -
-        SCROLL_TO_OFFSET;
-      ref.current.scrollTo({
-        top,
-        left: 0,
-        behavior: smooth ? "smooth" : "instant",
-      });
-    },
-    [entryHeight, containerHeight],
+  const numberRangeMetric = useMemo(
+    () => createRange(metricMin, metricMax, metricStep, ascending),
+    [ascending, metricMin, metricMax, metricStep],
   );
 
-  useEffect(() => {
-    if (currentLengths.length === 1) {
-      onLengthChange(currentLengths[0]);
-    }
-  }, [currentLengths]);
+  const numberRange = useMemo(
+    () => (unit === "imperial" ? numberRangeImperial : numberRangeMetric),
+    [unit, numberRangeImperial, numberRangeMetric],
+  );
 
-  useEffect(() => {
-    if (!currentLengths || currentLengths.length !== 1) {
-      return;
-    }
-    const newUnit = unit; // renaming for sake of sanity
-    if (usedUnit === newUnit) {
-      return;
-    }
-    const valueFromPrevRange = currentLengths[0];
-    const valueFromOtherRangeInNewUnit =
-      newUnit === "metric"
-        ? imperialToMetric(valueFromPrevRange)
-        : metricToImperial(valueFromPrevRange);
-    let newRange =
-      newUnit === "metric"
-        ? lodashRange(metricMin, metricMax + metricStep, metricStep)
-        : lodashRange(imperialMin, imperialMax + imperialStep, imperialStep);
-    if (!ascending) {
-      newRange = newRange.reverse();
-    }
-    const closestInRange = getClosestInRange(
-      newRange,
-      valueFromOtherRangeInNewUnit,
-    );
-    scrollContainer(newRange, closestInRange, false);
-    setCurrentLengths([closestInRange]);
-    onUnitChange(newUnit);
-    setUsedUnit(newUnit);
-  }, [unit, usedUnit, currentLengths]);
+  const getLengthViaIndex = (index: number) => numberRange[index];
 
-  useEffect(() => {
-    scrollContainer(numberRange, defaultLengthSanitized);
-  }, []);
+  const index = getIndexFromLength(numberRange, length);
 
-  useEffect(() => {
-    if (!currentLengths || currentLengths.length !== 1) {
-      return;
-    }
-    if (currentLengths[0] === defaultLengthSanitized) {
-      return;
-    }
-    if (unit !== usedUnit) {
-      return;
-    }
-    scrollContainer(numberRange, defaultLengthSanitized);
-  }, [defaultLengthSanitized]);
-
-  return (
-    <div
-      ref={ref}
-      className={"scroll-list"}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        overflowX: "hidden",
-        overflowY: "scroll",
-        scrollSnapType: "y mandatory",
-        border: "black 3px solid",
-        filter: disabled ? "grayscale(1)" : "grayscale(0)",
-        ...containerStyle,
-      }}
-    >
-      {numberRange.map((m: number, index: number) => (
+  const elements: IVirtuosaElement[] = useMemo(
+    () =>
+      numberRange.map((m: number) => ({ index, visibilityStatus }) => (
         <ListEntry
           key={`entry-${m}`}
           index={index}
+          visibilityStatus={visibilityStatus}
           unit={unit}
-          currentLengths={currentLengths}
-          setCurrentLengths={setCurrentLengths}
-          rootMargin={rootMargin}
-          parentRef={ref}
           value={m}
           entryHeight={entryHeight}
           metricFormatter={metricFormatter}
           imperialFormatter={imperialFormatter}
-          isFirst={index === 0}
-          isLast={index === numberRange.length - 1}
-          containerHeight={containerHeight}
           entryContainerStyle={entryContainerStyle}
           entryContentStyle={entryContentStyle}
           disabled={disabled}
         />
-      ))}
-      <style>{`
-               .scroll-list {
-                   -ms-overflow-style: none;
-                   scrollbar-width: none;
-               }
-               .scroll-list::-webkit-scrollbar {
-                   display: none;      
-               }
-        `}</style>
-    </div>
+      )),
+    [
+      numberRange,
+      unit,
+      entryHeight,
+      metricFormatter,
+      imperialFormatter,
+      entryContainerStyle,
+      entryContentStyle,
+      disabled,
+    ],
+  );
+
+  const keyName = `${keyNamePrefix}-list`;
+
+  return (
+    <Virtuosa
+      keyName={keyName}
+      containerStyle={containerStyle}
+      containerHeight={containerHeight}
+      elementHeight={entryHeight}
+      elements={elements}
+      onChange={(activeElementIndex) => {
+        onLengthChange(getLengthViaIndex(activeElementIndex));
+      }}
+      currentIndex={index}
+      centerFirstVertically
+      centerLastVertically
+      disabled={disabled}
+      backgroundRenderNumber={backgroundRenderNumber}
+      throttleWait={throttleWait}
+      onChangeTrigger={onLengthChangeTrigger}
+    />
   );
 };

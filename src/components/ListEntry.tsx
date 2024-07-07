@@ -1,46 +1,22 @@
-import React, { useEffect, useMemo } from "react";
-import { useInView } from "react-intersection-observer";
+import React, { useMemo } from "react";
 import { metricToImperial } from "$/convert/metricToImperial";
 import { inchesToFeetAndInches } from "$/convert/inchesToFeetAndInches";
 import { imperialToMetric } from "$/convert/imperialToMetric";
 import { ListEntryProps } from "$/types/ListEntryProps";
-import { ListEntryCore } from "$/components/ListEntryCore";
+import { SecondaryListEntry } from "$/components/SecondaryListEntry";
 
 export const ListEntry = ({
   value,
-  parentRef,
   entryHeight,
-  rootMargin,
-  setCurrentLengths,
-  currentLengths,
   metricFormatter,
-  isFirst,
-  isLast,
-  containerHeight,
   imperialFormatter,
   unit,
   index,
   entryContainerStyle = {},
   entryContentStyle = {},
   disabled,
+  visibilityStatus,
 }: ListEntryProps) => {
-  const [ref, inView] = useInView({
-    rootMargin,
-    threshold: 1,
-    root: parentRef.current,
-  });
-
-  useEffect(() => {
-    if (inView && !currentLengths.includes(value)) {
-      setCurrentLengths((prevState) => [...prevState, value]);
-    } else if (!inView && currentLengths.includes(value)) {
-      setCurrentLengths((prevState) => prevState.filter((v) => v !== value));
-    }
-    return () => {
-      setCurrentLengths((prevState) => prevState.filter((v) => v !== value));
-    };
-  }, [inView]);
-
   const metricValue = useMemo(
     () => (unit === "metric" ? value : imperialToMetric(value)),
     [unit, value],
@@ -68,31 +44,57 @@ export const ListEntry = ({
 
   const entryContainerStyleEffective =
     typeof entryContainerStyle === "function"
-      ? entryContainerStyle(index, metricValue, imperialValue, inView, disabled)
+      ? entryContainerStyle(
+          index,
+          metricValue,
+          imperialValue,
+          visibilityStatus,
+          disabled,
+        )
       : entryContainerStyle;
 
   const entryContentStyleEffective =
     typeof entryContentStyle === "function"
-      ? entryContentStyle(index, metricValue, imperialValue, inView, disabled)
+      ? entryContentStyle(
+          index,
+          metricValue,
+          imperialValue,
+          visibilityStatus,
+          disabled,
+        )
       : entryContentStyle;
 
   return (
-    <ListEntryCore
-      refFromParent={ref}
-      index={index}
-      disabled={disabled}
-      metricValue={metricValue}
-      imperialValue={imperialValue}
-      inView={inView}
-      metricValueFormatted={metricValueFormatted}
-      imperialValueFormatted={imperialValueFormatted}
-      unit={unit}
-      isFirst={isFirst}
-      isLast={isLast}
-      containerHeight={containerHeight}
-      entryHeight={entryHeight}
-      entryContainerStyleEffective={entryContainerStyleEffective}
-      entryContentStyleEffective={entryContentStyleEffective}
-    />
+    <div
+      className={"noselect"}
+      style={{
+        position: "relative",
+        minHeight: entryHeight,
+        fontSize: 24,
+        fontWeight: "bold",
+        boxSizing: "border-box",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        ...entryContainerStyleEffective,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          opacity: visibilityStatus === "CENTERED_EXACTLY" ? 1 : 0.35,
+          transition: "opacity 0.5s",
+          zIndex: 2,
+          ...entryContentStyleEffective,
+        }}
+      >
+        {unit === "metric" ? metricValueFormatted : imperialValueFormatted}
+        <SecondaryListEntry>
+          {unit === "metric" ? imperialValueFormatted : metricValueFormatted}
+        </SecondaryListEntry>
+      </div>
+    </div>
   );
 };

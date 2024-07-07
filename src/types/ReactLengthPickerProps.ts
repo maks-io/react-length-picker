@@ -9,7 +9,6 @@ export interface ReactLengthPickerProps {
   containerHeight?: number;
   containerStyle?: CSSProperties;
   containerWidth?: number;
-  defaultLength?: number;
   disabled?: boolean;
   entryContainerStyle?: ContainerStyle;
   entryContentStyle?: ContainerStyle;
@@ -18,6 +17,8 @@ export interface ReactLengthPickerProps {
   imperialMax?: number;
   imperialMin?: number;
   imperialStep?: number;
+  keyName: string;
+  length: number;
   metricFormatter?: MetricFormatter;
   metricMax?: number;
   metricMin?: number;
