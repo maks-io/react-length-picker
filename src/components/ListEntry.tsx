@@ -32,7 +32,7 @@ export const ListEntry = ({
   );
 
   const imperialValueFormatted = useMemo(() => {
-    const feetAndInches = inchesToFeetAndInches(imperialValue, true);
+    const feetAndInches = inchesToFeetAndInches(imperialValue, false);
     return imperialFormatter(
       unit === "imperial",
       imperialValue,
