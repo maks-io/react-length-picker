@@ -24,12 +24,11 @@ export const List = ({
   entryContainerStyle,
   entryContentStyle,
   containerStyle,
-  containerWidth,
-  onUnitChange,
   disabled,
   backgroundRenderNumber = 20,
   throttleWait = 32,
   onLengthChangeTrigger = "CENTERED",
+  hideScrollbar,
 }: ListProps) => {
   const numberRangeImperial = useMemo(
     () => createRange(imperialMin, imperialMax, imperialStep, ascending),
@@ -98,6 +97,7 @@ export const List = ({
       backgroundRenderNumber={backgroundRenderNumber}
       throttleWait={throttleWait}
       onChangeTrigger={onLengthChangeTrigger}
+      hideScrollbar={hideScrollbar}
     />
   );
 };

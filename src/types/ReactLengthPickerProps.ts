@@ -13,6 +13,7 @@ export interface ReactLengthPickerProps {
   entryContainerStyle?: ContainerStyle;
   entryContentStyle?: ContainerStyle;
   entryHeight?: number;
+  hideScrollbar?: boolean;
   imperialFormatter?: ImperialFormatter;
   imperialMax?: number;
   imperialMin?: number;

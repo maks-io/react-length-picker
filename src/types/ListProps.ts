@@ -9,12 +9,12 @@ export interface ListProps {
   ascending: boolean;
   backgroundRenderNumber?: number;
   containerHeight: number;
-  containerWidth: number;
   containerStyle?: CSSProperties;
   disabled: boolean;
   entryContainerStyle?: ContainerStyle;
   entryContentStyle?: ContainerStyle;
   entryHeight: number;
+  hideScrollbar?: boolean;
   imperialFormatter: ImperialFormatter;
   imperialMax: number;
   imperialMin: number;
@@ -27,7 +27,6 @@ export interface ListProps {
   metricStep: number;
   onLengthChange: (length: number) => void;
   onLengthChangeTrigger?: IOnChangeTrigger;
-  onUnitChange: (unit: Unit) => void;
   throttleWait?: number;
   unit: "metric" | "imperial";
 }

@@ -13,6 +13,7 @@ export const LengthPicker = ({
   containerHeight = 80,
   entryHeight = 40,
   unit = "metric",
+  hideScrollbar = true,
   onLengthChange = () => {},
   onUnitChange = () => {},
   length,
@@ -117,7 +118,6 @@ export const LengthPicker = ({
         containerStyle={containerStyle}
         unit={unit}
         containerHeight={containerHeight}
-        containerWidth={containerWidth}
         entryHeight={entryHeight}
         metricStep={metricStep}
         metricMin={metricMin}
@@ -132,7 +132,7 @@ export const LengthPicker = ({
         entryContainerStyle={entryContainerStyle}
         entryContentStyle={entryContentStyle}
         ascending={ascending}
-        onUnitChange={onUnitChange}
+        hideScrollbar={hideScrollbar}
         disabled={disabled}
       />
       <style>{`
