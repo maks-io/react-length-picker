@@ -440,10 +440,10 @@ undefsafe@^2.0.5:
   resolved "https://registry.yarnpkg.com/undefsafe/-/undefsafe-2.0.5.tgz#38733b9327bdcd226db889fb723a6efd162e6e2c"
   integrity sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==
 
-virtuosa@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/virtuosa/-/virtuosa-1.0.2.tgz#235bfcbcc5f53e31d15cdc1085e05ce172401a6c"
-  integrity sha512-GkALCrcmny629kpmFzAm2QGaXl1UVgYl+oUH0dLXZiC3stvGgXnznFM5+7cYPjbWAgL0yW5k1tHl7RjJZ6bFdQ==
+virtuosa@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/virtuosa/-/virtuosa-1.0.3.tgz#b104a99526742465b8a04dec328a737f44809a74"
+  integrity sha512-I3ujOJkyXY7z13qaAd0n6ogfoPk21es/J6jrMbbB6lQbih1gD4nCIHfbBArBiptjdfwODmO4xgX2DzmUIWb0tw==
   dependencies:
     lodash.throttle "^4.1.1"
 

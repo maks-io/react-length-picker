@@ -1,6 +1,6 @@
 {
   "name": "react-length-picker",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "A simple length picker that works with metric and imperial units",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -39,7 +39,7 @@
   "homepage": "https://github.com/maks-io/react-length-picker#readme",
   "dependencies": {
     "lodash.range": "^3.2.0",
-    "virtuosa": "^1.0.2"
+    "virtuosa": "^1.0.3"
   },
   "devDependencies": {
     "@types/lodash.range": "^3.2.9",
